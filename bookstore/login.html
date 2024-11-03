@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="return validateForm(event)">
+            <div class="input-group">
+                <label for="username">Username (Email)</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <div id="error-message" style="color: red; margin-top: 10px;"></div>
+            <p>Don't have an account? <a href="Register.html">Register here</a></p>
+        </form>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = ''; // Clear previous error message
+
+            // Updated email validation regex to require at least two characters before the '@'
+            const emailPattern = /^[a-zA-Z0-9._%+-]{3,15}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            // Password validation regex
+            const passwordCriteria = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            // Validate email format
+            if (!emailPattern.test(email)) {
+                errorMessage.textContent = "Please enter a valid email address (at least 3 to 15 characters before '@').";
+                return false; // Prevent form submission
+            }
+
+            // Validate password format
+            if (!passwordCriteria.test(password)) {
+                errorMessage.textContent = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.";
+                return false; // Prevent form submission
+            }
+
+            // If both validations pass, redirect to registration.html
+            window.location.href = 'bookpage.html';
+            return true; // Allow form submission (though it won't actually submit to a server)
+        }
+    </script>
+</body>
+</html>
